@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <button style="width:100%;height:100%;">Push me!</button>
+
+    <script>
+        var socket = io();
+
+        jQuery('button').click(function () {
+            console.log('click');
+            socket.emit('client', Date.now());
+        });
+
+        socket.on('client', function (msg) {
+            var now = Date.now();
+            var then = parseInt(msg, 10);
+            jQuery('body').append('<h1>' + (now - then) + '</h1>');
+        });
+    </script>
+</body>
+
+</html>
